@@ -1,6 +1,6 @@
-package com.nicholas.v1;
+package com.nicholas.v2.servlet;
 
-import com.nicholas.v1.annotation.*;
+import com.nicholas.hand.write.base.*;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -16,9 +16,6 @@ import java.lang.reflect.Method;
 import java.net.URL;
 import java.util.*;
 
-/**
- * 手写简易版 Spring 1.0版本
- */
 public class ZcDispatchServlet extends HttpServlet {
 
     // web.xml配置
@@ -34,11 +31,12 @@ public class ZcDispatchServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        this.doPost(req, resp);
+        super.doGet(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        super.doPost(req, resp);
         // 6.委派
         try {
             doDispatch(req, resp);
@@ -146,7 +144,7 @@ public class ZcDispatchServlet extends HttpServlet {
             return ;
         }
         ioc.forEach((key, value) -> {
-            for (Field field : value.getClass().getDeclaredFields()) {
+            for (Field field : value.getClass().getFields()) {
 
                 if (!field.isAnnotationPresent(ZcAutowired.class)) {
                     continue;
@@ -185,7 +183,7 @@ public class ZcDispatchServlet extends HttpServlet {
                     continue;
                 }
                 ZcRequestMapping requestMapping = method.getAnnotation(ZcRequestMapping.class);
-                String url = ("/" + baseUrl + "/" + requestMapping.value()).replaceAll("/+", "/");
+                String url = ("/" + baseUrl + "/" + requestMapping.value()).replace("/+", "/");
                 handlerMapping.put(url, method);
             }
         }
@@ -230,9 +228,8 @@ public class ZcDispatchServlet extends HttpServlet {
             }
         }
         Class<?> clazz = method.getDeclaringClass();
-        String beanName = toLowerFirstCase(clazz.getSimpleName());
-        Object returnValue = method.invoke(ioc.get(beanName), paramValues);
-        resp.getWriter().write(returnValue.toString());
+        String beanName = toLowerFirstCase(clazz.getName());
+        method.invoke(ioc.get(beanName), new Object[]{req, resp, params.get("name")});
     }
 
     private String toLowerFirstCase(String str) {

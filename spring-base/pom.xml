@@ -11,8 +11,9 @@
     <modules>
         <module>hand-write-v1</module>
         <module>hand-write-v2</module>
-        <module>hand-write-base</module>
         <module>hand-write-basis</module>
+        <module>hand-write-basis</module>
+        <module>hand-write-aop</module>
     </modules>
 
 

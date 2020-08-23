@@ -1,9 +1,13 @@
 package com.nicholas.v2.demo;
 
-import com.nicholas.hand.write.base.ZcAutowired;
-import com.nicholas.hand.write.base.ZcController;
-import com.nicholas.hand.write.base.ZcRequestMapping;
-import com.nicholas.hand.write.base.ZcRequestParam;
+import com.nicholas.v2.spring.annotation.ZcAutowired;
+import com.nicholas.v2.spring.annotation.ZcController;
+import com.nicholas.v2.spring.annotation.ZcRequestMapping;
+import com.nicholas.v2.spring.annotation.ZcRequestParam;
+import com.nicholas.v2.spring.webmvc.servlet.ZcModelAndView;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @ZcController("/demo")
 public class HelloController {
@@ -20,6 +24,17 @@ public class HelloController {
     @ZcRequestMapping("/hello2")
     public String testHello2(@ZcRequestParam String name) {
         return helloService.getHelloText(name);
+    }
+
+    @ZcRequestMapping("/add*.json")
+    public ZcModelAndView testMv(@ZcRequestParam String name) {
+        String result = helloService.getHelloText(name);
+        Map<String, Object> map = new HashMap<>();
+        map.put("name", "Nicholas");
+        map.put("data", "CXFASDGASDFGADFGASD");
+        map.put("token", "gfaQAA6465654d6654GF6Aefaefgaeg");
+        ZcModelAndView mv = new ZcModelAndView("first", map);
+        return mv;
     }
 
 }

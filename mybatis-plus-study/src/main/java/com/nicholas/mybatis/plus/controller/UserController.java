@@ -7,10 +7,13 @@ import com.nicholas.mybatis.plus.service.UserService;
 import org.apache.commons.lang3.StringUtils;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
+import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,7 +24,7 @@ import java.util.concurrent.TimeUnit;
 
 @RestController
 @RequestMapping("/user")
-public class UserController implements InitializingBean {
+public class UserController implements InitializingBean, ApplicationContextAware {
 
     @Autowired
     private UserService userService;
@@ -35,7 +38,14 @@ public class UserController implements InitializingBean {
     @Autowired
     private RedissonClient redissonClient;
 
+    ApplicationContext applicationContext;
+
     Cache cache;
+
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        this.applicationContext = applicationContext;
+    }
 
     @Override
     public void afterPropertiesSet() throws Exception {

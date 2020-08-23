@@ -4,14 +4,18 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.nicholas</groupId>
+    <parent>
+        <artifactId>spring-learn</artifactId>
+        <groupId>com.nicholas</groupId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+
     <artifactId>spring-base</artifactId>
     <packaging>pom</packaging>
     <version>1.0.0-SNAPSHOT</version>
     <modules>
         <module>hand-write-v1</module>
         <module>hand-write-v2</module>
-        <module>hand-write-basis</module>
         <module>hand-write-basis</module>
         <module>hand-write-aop</module>
     </modules>

@@ -1,0 +1,41 @@
+package com.nicholas.v2.spring.aop.aspect;
+
+import java.lang.reflect.Method;
+
+public class ZcAdvice {
+
+    private Object aspect; // aop切面类
+
+    private Method adviceMethod;
+
+    private String throwName;
+
+    public ZcAdvice(Object aspect, Method adviceMethod) {
+        this.aspect = aspect;
+        this.adviceMethod = adviceMethod;
+    }
+
+    public Object getAspect() {
+        return aspect;
+    }
+
+    public void setAspect(Object aspect) {
+        this.aspect = aspect;
+    }
+
+    public Method getAdviceMethod() {
+        return adviceMethod;
+    }
+
+    public void setAdviceMethod(Method adviceMethod) {
+        this.adviceMethod = adviceMethod;
+    }
+
+    public String getThrowName() {
+        return throwName;
+    }
+
+    public void setThrowName(String throwName) {
+        this.throwName = throwName;
+    }
+}
